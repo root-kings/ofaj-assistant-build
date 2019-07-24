@@ -1,0 +1,110 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OFAJ Assistant</title>
+    <base href="index.html">
+    <link rel="stylesheet" href="css/lib/materialize.min.css">
+    <link rel="stylesheet" href="css/lib/MaterialIcons.css">
+    <link rel="stylesheet" href="css/lib/dayshmookh.layout.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+  </head>
+  <body>
+    <div id="waitoverlay">
+      <div class="full-height valign-wrapper">
+        <div class="full-width center">
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-yellow">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-green">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main class="valign-wrapper sky-blue">
+      <div class="row">
+        <div class="col offset-s1 s10 z-depth-5 card-panel rounded">
+          <div class="container">
+            <form class="row" id="loginform">
+              <div class="col s12">
+                <h4 class="header light center">OFAJ Assistant</h4>
+                <h5 class="center">Register</h5>
+              </div>
+              <div class="input-field col s12"><i class="material-icons prefix blue-text">account_circle</i>
+                <input class="validate" id="name" name="name" type="text">
+                <label for="name">Name</label>
+              </div>
+              <div class="input-field col s12"><i class="material-icons prefix blue-text">account_circle</i>
+                <input class="validate" id="username" name="username" type="text">
+                <label for="username">Username</label>
+              </div>
+              <div class="input-field col s12"><i class="material-icons prefix blue-text">lock_circle</i>
+                <input class="validate" id="password" name="password" type="password">
+                <label for="password">Password</label>
+              </div>
+              <div class="input-field col s12"><i class="material-icons prefix blue-text">account_circle</i>
+                <input class="validate" id="email" name="email" type="email">
+                <label for="email">Email</label>
+              </div>
+              <div class="input-field col s12"><i class="material-icons prefix blue-text">account_circle</i>
+                <input class="validate" id="phone" name="phone" type="text">
+                <label for="phone">Phone</label>
+              </div>
+              <div class="col s12 center"><a class="btn btn-large waves-effect waves-light blue curvy" href="javascript: doRegister()">Register</a></div>
+              <div class="col s12 center"><a class="btn btn-large btn-flat waves-effect waves-light" href="login.html">login</a></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/lib/vue.js"></script>
+    <script src="js/lib/moment.js"></script>
+    <script src="js/lib/materialize.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/init/login.js"></script>
+  </body>
+</html>

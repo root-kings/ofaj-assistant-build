@@ -1,0 +1,268 @@
+@media only screen and (min-width: 992px) {
+	.brand-logo {
+		margin-left: 15px;
+	}
+}
+
+.chart {
+	min-height: 35vh;
+}
+
+.btn-bordered {
+	/* border-radius: 8px; 
+    overflow: hidden; */
+	box-sizing: content-box;
+	border: 1px solid #aaaaaa80;
+	margin-right: 5px;
+}
+
+a.breadcrumb::before {
+	color: currentColor;
+}
+
+#sectors {
+	padding-left: 5px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
+#sectors .card-panel {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+#upcoming .collection .row {
+	margin: 0;
+}
+
+#upcoming .collection .collection-item.avatar {
+	min-height: 50px;
+	padding-left: 20px;
+}
+
+.burning-orange {
+	background: #ff416c;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #ff4b2b, #ff416c);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #ff4b2b, #ff416c);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.firewatch {
+	background: #cb2d3e;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #ef473a, #cb2d3e);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #ef473a, #cb2d3e);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.playing-with-reds {
+	background: #d31027;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #ea384d, #d31027);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #ea384d, #d31027);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.sky-blue {
+	background-image: linear-gradient(45deg, #36d1dc, #5b86e5);
+}
+
+.sharp {
+	border-radius: 0px;
+}
+
+/* for arrow buttons */
+/*
+.step {
+	display: block;
+	float: left;
+	/* font-weight: bold; *
+	background: #e8f5e9;
+	padding-right: 5px;
+	padding-top: 8px;
+	height: 50px;
+	/* line-height: 32px; *
+	margin-right: 23px;
+	position: relative;
+	text-decoration: none;
+	color: #666;
+}
+
+.step:before {
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 0;
+	left: -20px;
+	border: 25px solid transparent;
+	border-left: 15px solid;
+	border-right: 5px solid transparent;
+	border-color: #e8f5e9;
+	border-left-color: transparent;
+}
+
+.step:after {
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 0;
+	right: -30px;
+	border: 25px solid transparent;
+	border-left: 15px solid;
+	border-right: 15px solid transparent;
+	border-left-color: #e8f5e9;
+}
+
+.step:first-of-type {
+	border-radius: 2px 0 0 2px;
+	padding-left: 10px;
+}
+
+.step:first-of-type:before {
+	display: none;
+}
+
+.step:last-of-type {
+	border-radius: 0 2px 2px 0;
+	margin-right: 0px;
+	padding-right: 15px;
+}
+
+.step:last-of-type:after {
+	display: none;
+}
+
+.step.completed {
+	background: #4caf50;
+	color: #fff;
+}
+
+.step.completed:before {
+	border-color: #4caf50;
+	border-left-color: transparent;
+}
+
+.step.completed:after {
+	border-left-color: #4caf50;
+}
+
+.step:hover {
+	background: #388e3c;
+	color: #fff;
+}
+
+.step:hover:before {
+	border-color: #388e3c;
+	border-left-color: transparent;
+}
+
+.step:hover:after {
+	border-left-color: #388e3c;
+} */
+
+span.tiny {
+	font-size: 0.7em;
+}
+
+.modal.bottom-sheet {
+	max-height: 90%;
+	height: 90%;
+}
+
+#waitoverlay {
+	position: fixed;
+	/* Sit on top of the page content */
+	display: none;
+	/* Hidden by default */
+	width: 100%;
+	/* Full width (cover the whole page) */
+	height: 100%;
+	/* Full height (cover the whole page) */
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255, 255, 255, 0.5);
+	/* White background with opacity */
+	z-index: 10000;
+	/* Specify a stack order in case you're using a different order for other elements */
+	cursor: pointer;
+	/* Add a pointer on hover */
+}
+
+.wavy-bg {
+	background: url('/images/backgrounds/wave-hero-background.svg');
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+}
+
+.wavy-blue-bg {
+	background: url('/images/backgrounds/homepage-wave-bg.svg');
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+}
+
+.blue-bg {
+	background: #2bc0e4; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to botom, #eaecc6, #2bc0e4); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to botom, #eaecc6, #2bc0e4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bordered {
+	border-style: solid;
+	border-width: 1px;
+}
+
+.bordered.red-border {
+	border-color: #f44336;
+}
+
+.bordered.blue-border {
+	border-color: #2196f3;
+}
+.tilted {
+	transform: perspective(400px) rotateX(-3deg);
+	transition: transform 0.5s linear;
+}
+
+.tilted.active {
+	transform: perspective(400px) rotateX(0deg);
+}
+.no-border {
+	border: none;
+}
+
+.pdf-container {
+	/* width: 100%; */
+	/* position: relative; */
+	/* height: auto; */
+	/* display: flex; */
+	/* justify-content: center; */
+	overflow: scroll;
+	/* min-height: 50vh; */
+	height:500px;
+	position: relative;
+}
+
+.pdf-container .pdf, .konva-container{
+	/* flex: 0 1 auto; */
+	position: absolute;
+	top:0;
+	left:0;
+
+}
+
+/* .pdf-container .pdf { */
+	/* visibility: hidden; */
+/* } */

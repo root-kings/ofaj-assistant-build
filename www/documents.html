@@ -1,0 +1,262 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OFAJ Assistant</title>
+    <link rel="stylesheet" href="css/lib/materialize.min.css">
+    <link rel="stylesheet" href="css/lib/MaterialIcons.css">
+    <link rel="stylesheet" href="css/lib/dayshmookh.layout.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/contextmenu.css">
+  </head>
+  <body class="wavy-bg">
+    <div id="waitoverlay">
+      <div class="full-height valign-wrapper">
+        <div class="full-width center">
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-yellow">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-green">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header>
+      <div class="navbar-fixed">
+        <nav class="transparent z-depth-0">
+          <div class="nav-wrapper"><a class="white-text sidenav-trigger" data-target="slide-out" href="#"><i class="material-icons">menu</i></a><a class="white-text brand-logo truncate" href="index.html">Dashboard</a>
+            <ul class="right hide-on-med-and-down">
+              <li><a class="white-text" href="index.html">Home</a></li>
+              <li><a class="white-text" href="calibration.html">Calibration</a></li>
+              <li><a class="white-text" href="spares.html">Spares</a></li>
+              <li><a class="white-text" href="documents.html">Documents</a></li>
+              <li><a class="white-text" href="users.html">Users</a></li>
+              <li><a class="white-text" href="about.html">About</a></li>
+              <li><a class="white-text" href="javascript:logout()">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <ul class="sidenav" id="slide-out">
+        <li>
+          <div class="user-view">
+            <div class="background"><img src="images/office.jpg"></div><a href="#name"><span class="white-text name">{user.name}</span></a><a href="#email"><span class="white-text email">{user.email}</span></a>
+          </div>
+        </li>
+        <li><a href="index.html">Home<i class="material-icons left">home</i></a></li>
+        <li><a href="calibration.html">Calibration<i class="material-icons left">settings</i></a></li>
+        <li><a href="spares.html">Spares<i class="material-icons left">settings</i></a></li>
+        <li><a href="documents.html">Documents<i class="material-icons left">people</i></a></li>
+        <li><a href="users.html">Users<i class="material-icons left">people</i></a></li>
+        <li><a href="about.html">About<i class="material-icons left">info</i></a></li>
+        <li><a href="#!">Night Mode<i class="material-icons left">palette</i>
+            <div class="switch right margined-top-compact">
+              <label>
+                <input id="theme" type="checkbox" name="theme" onclick="changeTheme(this)"><span class="lever"></span>
+              </label>
+            </div></a></li>
+        <li><a href="javascript:logout()">Logout<i class="material-icons left">lock</i></a></li>
+      </ul>
+    </header>
+    <main>
+      <section id="documentList">
+        <div class="container">
+          <div class="row">
+            <h4 class="light col s12">Documents</h4>
+          </div>
+          <div class="row">
+            <h5 class="light col s12">Pending Files</h5>
+            <div class="col s12">
+              <ul class="collapsible no-border z-depth-0">
+                <li class="tilted z-depth-5" v-for="document in attendingdocuments" :key="document._id">
+                  <div class="collapsible-header"><i class="material-icons">description</i>{{document.name}} <br/> {{document.format}} - {{moment(document.dateCreated).format('DD MMM YYYY | hh:mm')}}</div>
+                  <div class="collapsible-body grey lighten-3">
+                    <div class="row">
+                      <div class="col s12 pdf-container" :id="'pdf-container'+document._id" @contextmenu.prevent="showContextMenu($event, document)">
+                        <canvas class="pdf" :id="'pdf'+document._id"></canvas>
+                        <div class="konva-container" :id="'konva-container'+document._id"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <h6 class="light col s12"># {{ document._id }}</h6>
+                      <h6 class="col s8">Current status: {{ document.rejected ? "Rejected": document.done ? "Finalize" : "Pending"}}</h6>
+                      <h6 class="col s12">Applicant: {{ document.applicant.name }}</h6>
+                      <h6 class="col s12">Current Passing Officer: {{ document.currentOfficer.name }}</h6>
+                    </div>
+                    <div class="row">   
+                      <h6 class="light col s12">History of Officers: </h6>
+                      <div class="col s12">
+                        <ul class="collection history">
+                          <li class="collection-item avatar" v-for="historyItem in document.history"><i class="material-icons circle green" v-if="historyItem.action == 'Approved'">done</i><i class="material-icons circle red" v-else-if="historyItem.action == 'Rejected'">close</i><i class="material-icons circle yellow" v-else-if="historyItem.action == 'Forwared'">forward</i><i class="material-icons circle blue" v-else="historyItem.action == 'Finalized'">done_all</i><span class="title">{{ historyItem.officer.name }}</span>
+                            <p>{{ historyItem.action }} - {{ moment(historyItem.date).format('DD MMM YYYY') }}</p>
+                            <p>{{ historyItem.comment }}</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="light col s12">Your Generated Files</h5>
+            <div class="col s12">
+              <ul class="collapsible no-border z-depth-0">
+                <li class="tilted z-depth-5" v-for="document in selfdocuments" :key="document._id">
+                  <div class="collapsible-header"><i class="material-icons red-text text-darken-2" v-if="document.rejected">close</i><i class="material-icons green-text text-darken-2" v-else-if="document.done">done_all</i><i class="material-icons" v-else="v-else">access_time</i>{{document.name}} <br/> {{document.format}} - {{moment(document.dateCreated).format('DD MMM YYYY | hh:mm')}}</div>
+                  <div class="collapsible-body grey lighten-3">
+                    <div class="row">
+                      <h6 class="light col s12"># {{ document._id }}</h6>
+                      <p class="col s12"><a class="btn" :href="document.fileUrl" target="_blank">View<i class="material-icons left">visibility</i></a></p>
+                      <h6 class="col s8">Current status: {{ document.rejected ? "Rejected": document.done ? "Finalized" : "Pending"}}</h6>
+                      <h6 class="col s12">Applicant: {{ document.applicant.name }}</h6>
+                      <h6 class="col s12">Current Passing Officer: {{ document.currentOfficer.name }}</h6>
+                    </div>
+                    <div class="row">   
+                      <h6 class="light col s12">History of Officers: </h6>
+                      <div class="col s12">
+                        <ul class="collection history">
+                          <li class="collection-item avatar" v-for="historyItem in document.history"><i class="material-icons circle green" v-if="historyItem.action == 'Approved'">done</i><i class="material-icons circle red" v-else-if="historyItem.action == 'Rejected'">close</i><i class="material-icons circle yellow darken-2" v-else-if="historyItem.action == 'Forwarded'">forward</i><i class="material-icons circle blue" v-else="historyItem.action == 'Finalized'">done_all</i><span class="title">{{ historyItem.officer.name }}</span>
+                            <p>{{ historyItem.action }} - {{ moment(historyItem.date).format('DD MMM YYYY') }}</p>
+                            <p>{{ historyItem.comment }}</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal" id="documentForwardModal">
+          <div class="modal-content">
+            <div class="row">
+              <div class="col s12">Select officer</div>
+              <div class="col s12">
+                <select class="browser-default" name="forwardOfficer" v-model="forwardOfficer" ref="officerSelect">
+                  <option value="" disabled="disabled" selected="selected">Choose your option</option>
+                  <option :value="officer._id" v-for="officer in officers" :key="officer._id">{{officer.name}}</option>
+                </select>
+              </div>
+              <p class="col s6 m3"><a class="btn full-width" @click="forwardDocument()">Forward</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="modal" id="OTPModal">
+          <div class="modal-content">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="OTP" type="text" name="OTP" v-model="OTP">
+                <label for="OTP">Enter OTP</label>
+              </div>
+              <p class="col s6 m3"><a class="btn full-width" @click="validateOTP()">Authenticate</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="fixed-action-btn"><a class="waves-effect waves-light btn-floating btn-large red modal-trigger" href="#documentmodal"><i class="material-icons large">add</i></a></div>
+        <div class="modal modal-fixed-footer" id="documentmodal">
+          <div class="modal-content">
+            <div class="row">
+              <h4 class="col s12">Create application</h4>
+              <form class="col s12" id="documentCreateForm" v-on:submit.prevent="onSubmit">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="name" type="text" name="name" v-model="name">
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="col s12">
+                    <label>Officer</label>
+                    <select class="browser-default" name="officer" v-model="selectedofficer" ref="officerSelect">
+                      <option value="" disabled="disabled" selected="selected">Choose your option</option>
+                      <option :value="officer._id" v-for="officer in officers" :key="officer._id">{{officer.name}}</option>
+                    </select>
+                  </div>
+                  <div class="col s12">
+                    <label>Format</label>
+                    <select class="browser-default" name="format" v-model="selectedformat" ref="formatSelect">
+                      <option value="Case Purchase" selected="selected">Case Purchase</option>
+                      <option value="Tender Enquiry">Tender Enquiry</option>
+                      <option value="GFR">GFR</option>
+                      <option value="Noting">Noting</option>
+                      <option value="Misceallaneous">Misceallaneous</option>
+                    </select>
+                  </div>
+                  <div class="file-field input-field col s12">
+                    <div class="btn"><span>File</span>
+                      <input id="file" type="file" v-on:change="onFileUpload()" ref="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path" type="text" placeholder="Upload file">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer"><a class="modal-close waves-effect waves-red btn-flat red-text" href="#!">Cancel</a><a class="btn modal-close waves-effect waves-light green white-text" @click="onSubmit">Submit</a></div>
+        </div>
+        <ul class="vertical-menu-container" id="cntnr">
+          <li><a class="btn-floating hoverable waves-effect waves-light yellow" @click="addCommentToPDF()" v-if="!selectedDocument.isBeingEdited"><i class="material-icons">comment</i></a></li>
+          <li><a class="btn-floating hoverable waves-effect waves-light red" @click="signDocument()" v-if="!selectedDocument.isBeingEdited &amp;&amp; !selectedDocument.isSigned"><i class="material-icons">edit </i></a></li>
+          <li><a class="btn-floating hoverable waves-effect waves-light orange" @click="forwardDocumentModalOpen()" v-if="!selectedDocument.isBeingEdited"><i class="material-icons">forward</i></a></li>
+          <li><a class="btn-floating hoverable waves-effect waves-light green" @click="finalizeTextOnCanvas()" v-if="selectedDocument.isBeingEdited"><i class="material-icons">done</i></a></li>
+          <li><a class="btn-floating hoverable waves-effect waves-light blue" @click="finalizeDocument()" v-if="!selectedDocument.isBeingEdited &amp;&amp; selectedDocument.isSigned"><i class="material-icons">done_all</i></a></li>
+        </ul>
+      </section>
+    </main>
+    <script src="js/lib/vue.js"></script>
+    <script src="js/lib/moment.js"></script>
+    <script src="js/lib/materialize.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/lib/pdf.js"></script>
+    <script src="js/lib/jspdf.min.js"></script>
+    <script src="js/lib/konva.min.js"></script>
+    <script src="js/init/documents.js"></script>
+  </body>
+</html>

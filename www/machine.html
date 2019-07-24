@@ -1,0 +1,198 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OFAJ Assistant</title>
+    <link rel="stylesheet" href="css/lib/materialize.min.css">
+    <link rel="stylesheet" href="css/lib/MaterialIcons.css">
+    <link rel="stylesheet" href="css/lib/dayshmookh.layout.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+  </head>
+  <body class="wavy-bg">
+    <div id="waitoverlay">
+      <div class="full-height valign-wrapper">
+        <div class="full-width center">
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-yellow">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-green">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header>
+      <div class="navbar-fixed">
+        <nav class="transparent z-depth-0">
+          <div class="nav-wrapper"><a class="white-text sidenav-trigger" data-target="slide-out" href="#"><i class="material-icons">menu</i></a><a class="teal-text brand-logo truncate" href="index.html">Machine</a>
+            <ul class="right hide-on-med-and-down">
+              <li><a class="white-text" href="index.html">Home</a></li>
+              <li><a class="white-text" href="calibration.html">Calibration</a></li>
+              <li><a class="white-text" href="spares.html">Spares</a></li>
+              <li><a class="white-text" href="documents.html">Documents</a></li>
+              <li><a class="white-text" href="users.html">Users</a></li>
+              <li><a class="white-text" href="about.html">About</a></li>
+              <li><a class="white-text" href="javascript:logout()">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <ul class="sidenav" id="slide-out">
+        <li>
+          <div class="user-view">
+            <div class="background"><img src="images/office.jpg"></div><a href="#name"><span class="white-text name">{user.name}</span></a><a href="#email"><span class="white-text email">{user.email}</span></a>
+          </div>
+        </li>
+        <li><a href="index.html">Home<i class="material-icons left">home</i></a></li>
+        <li><a href="calibration.html">Calibration<i class="material-icons left">settings</i></a></li>
+        <li><a href="spares.html">Spares<i class="material-icons left">settings</i></a></li>
+        <li><a href="documents.html">Documents<i class="material-icons left">people</i></a></li>
+        <li><a href="users.html">Users<i class="material-icons left">people</i></a></li>
+        <li><a href="about.html">About<i class="material-icons left">info</i></a></li>
+        <li><a href="#!">Night Mode<i class="material-icons left">palette</i>
+            <div class="switch right margined-top-compact">
+              <label>
+                <input id="theme" type="checkbox" name="theme" onclick="changeTheme(this)"><span class="lever"></span>
+              </label>
+            </div></a></li>
+        <li><a href="javascript:logout()">Logout<i class="material-icons left">lock</i></a></li>
+      </ul>
+    </header>
+    <main>
+      <div id="machine" v-once="v-once">
+        <div class="card sharp z-depth-0">
+          <div class="card-content">
+            <div class="row no-margin">
+              <p class="col s12 light"># {{machine._id}}</p>
+              <h4 class="col s12">Edit {{machine.name}}</h4>
+              <form class="col s12" id="createmachineform">
+                <div class="row no-margin">
+                  <div class="input-field col s12">
+                    <input class="validate" id="name" type="text" name="name" v-model="machine.name">
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input class="validate" id="interval" type="text" name="interval" v-model="machine.checkup.interval.value">
+                    <label for="interval">Checkup Interval</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <select class="no-autoinit" name="unit" v-model="machine.checkup.interval.unit">
+                      <option value="days">Days</option>
+                      <option value="months" selected="selected">Months</option>
+                      <option value="years">Years    </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row no-margin">
+                  <div class="input-field col s6">
+                    <select class="no-autoinit" name="case" v-model="machine.case">
+                      <option value="open">Open</option>
+                      <option value="lte">LTE</option>
+                      <option value="cp">CP</option>
+                      <option value="gfr">GFR</option>
+                    </select>
+                    <label>Case through</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input class="validate" id="testing" type="text" name="testing" v-model="machine.testing">
+                    <label for="testing">What to test</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="remark" type="text" name="remark" v-model="machine.remark">
+                    <label for="remark">Remarks</label>
+                  </div>
+                </div>
+                <div class="row no-margin">
+                  <div class="input-field col s6">
+                    <input class="validate" id="incharge" type="text" name="incharge" v-model="machine.incharge.name">
+                    <label for="incharge">Incharge</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input class="validate" id="incharge-email" type="email" name="incharge-email" v-model="machine.incharge.email">
+                    <label for="incharge-email">Incharge Email</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input class="validate" id="incharge-phone" type="tel" name="incharge-phone" v-model="machine.incharge.phone">
+                    <label for="incharge-phone">Phone</label>
+                  </div>
+                </div>
+                <div class="row no-margin">
+                  <div class="input-field col s6">
+                    <input class="validate" id="supplier" type="text" name="supplier" v-model="machine.supplier.name">
+                    <label for="supplier">Supplier</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input class="validate" id="supplier-email" type="email" name="supplier-email" v-model="machine.supplier.email">
+                    <label for="supplier-email">Supplier Email</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input class="validate" id="supplier-phone" type="tel" name="supplier-phone" v-model="machine.supplier.phone">
+                    <label for="supplier-phone">Supplier Phone</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input class="validate" id="supplier-reminder" type="number" name="supplier-reminder" value="10" min="0" v-model="machine.supplier.reminder">
+                    <label for="supplier-reminder">Reminder before (days)</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="card-action">
+            <div class="row no-margin">
+              <div class="col s12 right-align"><a class="btn btn-flat waves-effect" @click="window.history.back()">Back</a><a class="btn waves-effect waves-light green white-text" @click="updateMachine(machine._id)">Submit</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/lib/vue.js"></script>
+    <script src="js/lib/moment.js"></script>
+    <script src="js/lib/materialize.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/lib/moment.js"></script>
+    <script src="js/init/machine.js"></script>
+  </body>
+</html>

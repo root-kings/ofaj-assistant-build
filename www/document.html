@@ -1,0 +1,149 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OFAJ Assistant</title>
+    <link rel="stylesheet" href="css/lib/materialize.min.css">
+    <link rel="stylesheet" href="css/lib/MaterialIcons.css">
+    <link rel="stylesheet" href="css/lib/dayshmookh.layout.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+  </head>
+  <body class="wavy-bg">
+    <div id="waitoverlay">
+      <div class="full-height valign-wrapper">
+        <div class="full-width center">
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-yellow">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-green">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header>
+      <div class="navbar-fixed">
+        <nav class="transparent z-depth-0">
+          <div class="nav-wrapper"><a class="white-text sidenav-trigger" data-target="slide-out" href="#"><i class="material-icons">menu</i></a><a class="white-text brand-logo truncate" href="index.html">Dashboard</a>
+            <ul class="right hide-on-med-and-down">
+              <li><a class="white-text" href="index.html">Home</a></li>
+              <li><a class="white-text" href="calibration.html">Calibration</a></li>
+              <li><a class="white-text" href="spares.html">Spares</a></li>
+              <li><a class="white-text" href="documents.html">Documents</a></li>
+              <li><a class="white-text" href="users.html">Users</a></li>
+              <li><a class="white-text" href="about.html">About</a></li>
+              <li><a class="white-text" href="javascript:logout()">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <ul class="sidenav" id="slide-out">
+        <li>
+          <div class="user-view">
+            <div class="background"><img src="images/office.jpg"></div><a href="#name"><span class="white-text name">{user.name}</span></a><a href="#email"><span class="white-text email">{user.email}</span></a>
+          </div>
+        </li>
+        <li><a href="index.html">Home<i class="material-icons left">home</i></a></li>
+        <li><a href="calibration.html">Calibration<i class="material-icons left">settings</i></a></li>
+        <li><a href="spares.html">Spares<i class="material-icons left">settings</i></a></li>
+        <li><a href="documents.html">Documents<i class="material-icons left">people</i></a></li>
+        <li><a href="users.html">Users<i class="material-icons left">people</i></a></li>
+        <li><a href="about.html">About<i class="material-icons left">info</i></a></li>
+        <li><a href="#!">Night Mode<i class="material-icons left">palette</i>
+            <div class="switch right margined-top-compact">
+              <label>
+                <input id="theme" type="checkbox" name="theme" onclick="changeTheme(this)"><span class="lever"></span>
+              </label>
+            </div></a></li>
+        <li><a href="javascript:logout()">Logout<i class="material-icons left">lock</i></a></li>
+      </ul>
+    </header>
+    <main>
+      <section id="document">
+        <div class="container">
+          <div class="row">
+            <h4 class="light col s12">Document Details</h4>
+            <h5 class="col s12">{{ name }}<i class="material-icons red-text right" v-if="urgent">error_outline</i></h5>
+            <h6 class="light col s12"># {{ documentId }}</h6>
+            <p class="col s12"><a class="btn" :href="fileUrl" target="_blank">View<i class="material-icons left">visibility</i></a></p>
+            <h6 class="col s8">Current status: {{ rejected ? "Rejected": done ? "Done" : "Pending"}}</h6>
+            <h6 class="col s12">Applicant: {{ applicant.name }}</h6>
+            <h6 class="col s12">Current Passing Officer: {{ currentOfficer.name }}</h6>
+          </div>
+          <div class="row" v-if="passingOfficerLoggedIn">
+            <p class="col s6 m3">
+              <button class="btn full-width green" @click="approveDocument" :disabled="done || approved || rejected">Approve</button>
+            </p>
+            <p class="col s6 m3">
+              <button class="btn full-width" @click="forwardDocument" :disabled="done || rejected || !approved">Forward</button>
+            </p>
+            <p class="col s6 m3">
+              <button class="btn full-width blue" @click="finalizeDocument" :disabled="done || rejected || !approved">Done</button>
+            </p>
+            <p class="col s6 m3">
+              <button class="btn full-width red" @click="rejectDocument" :disabled="done || approved || rejected">Reject</button>
+            </p>
+          </div>
+          <div class="row">   
+            <h6 class="light col s12">History of Officers: </h6>
+            <div class="col s12">
+              <ul class="collection history">
+                <li class="collection-item avatar" v-for="historyItem in history"><i class="material-icons circle green" v-if="historyItem.action == 'Approved'">done</i><i class="material-icons circle red" v-else-if="historyItem.action == 'Rejected'">close</i><i class="material-icons circle yellow" v-else-if="historyItem.action == 'Forwared'">forward</i><i class="material-icons circle blue" v-else="historyItem.action == 'Finalized'">done_all</i><span class="title">{{ historyItem.officer.name }}</span>
+                  <p>{{ historyItem.action }} - {{ moment(historyItem.date).format('DD MMM YYYY') }}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="js/lib/vue.js"></script>
+    <script src="js/lib/moment.js"></script>
+    <script src="js/lib/materialize.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/init/document.js"></script>
+  </body>
+</html>

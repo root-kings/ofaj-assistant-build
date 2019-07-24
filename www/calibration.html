@@ -1,0 +1,258 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OFAJ Assistant</title>
+    <link rel="stylesheet" href="css/lib/materialize.min.css">
+    <link rel="stylesheet" href="css/lib/MaterialIcons.css">
+    <link rel="stylesheet" href="css/lib/dayshmookh.layout.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+  </head>
+  <body class="wavy-bg">
+    <div id="waitoverlay">
+      <div class="full-height valign-wrapper">
+        <div class="full-width center">
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-yellow">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+            <div class="spinner-layer spinner-green">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header>
+      <div class="navbar-fixed">
+        <nav class="transparent z-depth-0">
+          <div class="nav-wrapper"><a class="white-text sidenav-trigger" data-target="slide-out" href="#"><i class="material-icons">menu</i></a><a class="teal-text brand-logo truncate" href="index.html">CALIBRATION STATUS</a>
+            <ul class="right hide-on-med-and-down">
+              <li><a class="white-text" href="index.html">Home</a></li>
+              <li><a class="white-text" href="calibration.html">Calibration</a></li>
+              <li><a class="white-text" href="spares.html">Spares</a></li>
+              <li><a class="white-text" href="documents.html">Documents</a></li>
+              <li><a class="white-text" href="users.html">Users</a></li>
+              <li><a class="white-text" href="about.html">About</a></li>
+              <li><a class="white-text" href="javascript:logout()">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <ul class="sidenav" id="slide-out">
+        <li>
+          <div class="user-view">
+            <div class="background"><img src="images/office.jpg"></div><a href="#name"><span class="white-text name">{user.name}</span></a><a href="#email"><span class="white-text email">{user.email}</span></a>
+          </div>
+        </li>
+        <li><a href="index.html">Home<i class="material-icons left">home</i></a></li>
+        <li><a href="calibration.html">Calibration<i class="material-icons left">settings</i></a></li>
+        <li><a href="spares.html">Spares<i class="material-icons left">settings</i></a></li>
+        <li><a href="documents.html">Documents<i class="material-icons left">people</i></a></li>
+        <li><a href="users.html">Users<i class="material-icons left">people</i></a></li>
+        <li><a href="about.html">About<i class="material-icons left">info</i></a></li>
+        <li><a href="#!">Night Mode<i class="material-icons left">palette</i>
+            <div class="switch right margined-top-compact">
+              <label>
+                <input id="theme" type="checkbox" name="theme" onclick="changeTheme(this)"><span class="lever"></span>
+              </label>
+            </div></a></li>
+        <li><a href="javascript:logout()">Logout<i class="material-icons left">lock</i></a></li>
+      </ul>
+    </header>
+    <main>
+      <div class="modal modal-fixed-footer" id="machinemodal">
+        <div class="modal-content">
+          <div class="row">
+            <h4 class="col s12">Create machine</h4>
+            <form class="col s12" id="createmachineform">
+              <div class="row">
+                <div class="input-field col s12">
+                  <input class="validate" id="name" type="text" name="name">
+                  <label for="name">Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input class="validate" id="interval" type="text" name="interval">
+                  <label for="interval">Checkup Interval</label>
+                </div>
+                <div class="input-field col s6">
+                  <select name="unit">
+                    <option value="days">Days</option>
+                    <option value="months" selected="selected">Months</option>
+                    <option value="years">Years    </option>
+                  </select>
+                </div>
+                <div class="input-field col s6">
+                  <select name="case">
+                    <option value="open">Open</option>
+                    <option value="lte">LTE</option>
+                    <option value="cp">CP</option>
+                    <option value="gfr">GFR</option>
+                  </select>
+                  <label>Case through</label>
+                </div>
+                <div class="input-field col s6">
+                  <input class="validate" id="testing" type="text" name="testing">
+                  <label for="testing">What to test</label>
+                </div>
+                <div class="input-field col s12">
+                  <input id="remark" type="text" name="remark">
+                  <label for="remark">Remarks</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input class="validate" id="incharge" type="text" name="incharge">
+                  <label for="incharge">Incharge</label>
+                </div>
+                <div class="input-field col s6">
+                  <input class="validate" id="incharge-email" type="email" name="incharge-email">
+                  <label for="incharge-email">Incharge Email</label>
+                </div>
+                <div class="input-field col s6">
+                  <input class="validate" id="incharge-phone" type="tel" name="incharge-phone">
+                  <label for="incharge-phone">Phone</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input class="validate" id="supplier" type="text" name="supplier">
+                  <label for="supplier">Supplier</label>
+                </div>
+                <div class="input-field col s6">
+                  <input class="validate" id="supplier-email" type="email" name="supplier-email">
+                  <label for="supplier-email">Supplier Email</label>
+                </div>
+                <div class="input-field col s6">
+                  <input class="validate" id="supplier-phone" type="tel" name="supplier-phone">
+                  <label for="supplier-phone">Supplier Phone</label>
+                </div>
+                <div class="input-field col s6">
+                  <input class="validate" id="supplier-reminder" type="number" name="supplier-reminder" value="10" min="0">
+                  <label for="supplier-reminder">Reminder before (days)</label>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer"><a class="modal-close waves-effect waves-red btn-flat red-text" href="#!">Cancel</a><a class="btn modal-close waves-effect waves-light green white-text" href="javascript:createMachine();">Submit</a></div>
+      </div>
+      <div class="fixed-action-btn">
+        <!-- Modal Trigger--><a class="waves-effect waves-light btn-floating btn-large red modal-trigger" href="#machinemodal"><i class="material-icons large">add</i></a>
+      </div>
+      <div id="upcoming">
+        <ul class="collapsible z-depth-0">
+          <li v-for="machine in machines">
+            <div class="collapsible-header z-depth-0" v-bind:class="{'burning-orange white-text': machine.soon }">
+              <p class="full-width no-margin">{{machine.name}} <span class="right">Next: {{machine.checkup.next}} | {{machine.soondays < 0 ? -(machine.soondays) + ' days over due' : machine.soondays + ' days left'}} </span></p>
+            </div>
+            <div class="collapsible-body card no-padding z-depth-0">
+              <div class="card-content">
+                <div class="row no-margin"><span class="card-title col s12 grey-text text-darken-4">{{machine.name}}</span>
+                  <p class="light col s12">Case through: {{machine.case}}</p>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="card-content">
+                <div class="row no-margin">
+                  <h5 class="col s12 light">Testing</h5>
+                  <p class="col s12">Test: <span class="strong">{{machine.testing}} </span></p>
+                  <p class="col s4">Next <br/><span class="strong">{{machine.checkup.next}} </span></p>
+                  <p class="col s4">Last<br/>{{machine.checkup.last}}</p>
+                  <p class="col s4">Frequency<br/>{{machine.checkup.interval.value}} {{machine.checkup.interval.unit}}</p>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="card-content">
+                <div class="row no-margin">       
+                  <h5 class="col s12 light">Supplier</h5>
+                  <h6 class="col s12 no-margin">{{machine.supplier.name}}</h6>
+                  <p class="col s12">Email: {{machine.supplier.email}}</p>
+                  <p class="col s12">Phone: {{machine.supplier.phone}}</p>
+                  <p class="col s12">Reminder interval: {{machine.supplier.reminder}} days</p>
+                  <p class="col s12">Reminder on: {{machine.reminder.next}} </p>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="card-content">
+                <div class="row no-margin">       
+                  <h5 class="col s12 light">Incharge</h5>
+                  <h6 class="col s12 no-margin">{{machine.incharge.name}}</h6>
+                  <p class="col s12">Email: {{machine.incharge.email}}</p>
+                  <p class="col s12">Phone: {{machine.incharge.phone}}</p>
+                </div>
+              </div>
+              <div class="card-action">
+                <div class="row no-margin">
+                  <div class="input-field col s12">
+                    <input type="text" name="remark" v-bind:id="'remark'+machine._id" v-model="machine.remark" @change="saveRemark($event, machine._id)">
+                    <label v-bind:for="'remark'+machine._id">Remark </label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input class="datepicker" type="text" name="date" v-bind:id="'date'+machine._id">
+                    <label v-bind:for="'date'+machine._id">Add record date (yyyy-mm-dd)</label>
+                  </div>
+                  <div class="col s12"><a class="btn btn-flat btn-bordered curvy" @click="addRecord(machine._id)"><i class="material-icons">add</i></a><a class="btn btn-flat btn-bordered curvy modal-trigger" v-bind:href="'#record'+machine._id"><i class="material-icons">visibility</i></a><a class="btn btn-flat btn-bordered curvy" @click="machineEdit(machine._id)"><i class="material-icons">edit</i></a><a class="btn btn-flat red-text btn-bordered curvy modal-trigger" @click="machineDelete(machine._id)"><i class="material-icons">delete</i></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal white" v-bind:id="'record'+machine._id">
+              <ul class="collection">
+                <li class="collection-header">
+                  <h5 class="light center">Past calibration record</h5>
+                </li>
+                <li class="collection-item" v-for="record in machine.checkup.history"><span>{{moment(record).format('DD MMM YYYY')}}</span><a class="secondary-content red-text" @click="removeRecord(machine._id, record)"><i class="material-icons">close</i></a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+    <script src="js/lib/vue.js"></script>
+    <script src="js/lib/moment.js"></script>
+    <script src="js/lib/materialize.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/init/calibration.js"></script>
+  </body>
+</html>
